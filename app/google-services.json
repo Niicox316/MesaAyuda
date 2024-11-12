@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234117924883",
+    "project_id": "mesadeayuda2",
+    "storage_bucket": "mesadeayuda2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234117924883:android:7a32a87e7a6a05af2897e6",
+        "android_client_info": {
+          "package_name": "com.example.mesadeayuda2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUFlR1LpWXj0q95MYchb5Y0DivLZjnJAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
