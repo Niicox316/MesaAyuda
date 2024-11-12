@@ -73,25 +73,25 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
-    implementation ("androidx.core:core-ktx:1.9.0")
-    implementation ("androidx.compose.ui:ui:1.4.0")
-    implementation ("androidx.compose.material:material:1.4.0")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.4.0")
-    implementation ("androidx.navigation:navigation-compose:2.5.0")
-    implementation ("com.google.firebase:firebase-auth:22.0.0")
-    implementation ("com.google.firebase:firebase-firestore-ktx:24.5.0") // Verifica la última versión
-    implementation (platform("com.google.firebase:firebase-bom:32.0.0"))
-    implementation ("com.google.firebase:firebase-firestore-ktx")
-    implementation ("androidx.compose.ui:ui:1.3.2")
-    implementation ("androidx.navigation:navigation-compose:2.5.3")
-    implementation ("com.google.firebase:firebase-auth-ktx:21.0.1") // Verifica la versión
-    implementation ("androidx.compose.material:material-icons-core:1.0.0")
-    implementation ("androidx.compose.material:material-icons-extended:1.0.0")
-    implementation ("io.coil-kt:coil-compose:2.2.2") // o la versión más reciente de Coil Compose
-    implementation ("androidx.compose.material3:material3:<latest_version>")
-    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.0") // o la última versión disponible
+    implementation(platform(libs.firebase.bom.v3351))
+    implementation(libs.kotlin.stdlib)
+    implementation (libs.androidx.core.ktx.v190)
+    implementation (libs.androidx.ui.v140)
+    implementation (libs.androidx.material)
+    implementation (libs.ui.tooling.preview)
+    implementation (libs.androidx.navigation.compose.v250)
+    implementation (libs.firebase.auth)
+    implementation (libs.firebase.firestore.ktx.v2450) // Verifica la última versión
+    implementation (platform(libs.google.firebase.bom))
+    implementation (libs.google.firebase.firestore.ktx)
+    implementation (libs.androidx.compose.ui.ui)
+    implementation (libs.navigation.compose)
+    implementation (libs.firebase.auth.ktx) // Verifica la versión
+    implementation (libs.androidx.material.icons.core)
+    implementation (libs.androidx.material.icons.extended)
+    implementation (libs.coil.compose) // o la versión más reciente de Coil Compose
+    implementation (libs.material3)
+    implementation (libs.androidx.lifecycle.runtime.compose) // o la última versión disponible
 
 
 

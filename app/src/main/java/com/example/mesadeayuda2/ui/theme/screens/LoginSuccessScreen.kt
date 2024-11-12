@@ -1,7 +1,7 @@
 package com.example.mesadeayuda2.ui.theme.screens
 
-
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,25 +23,28 @@ fun LoginSuccessScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .padding(24.dp)
+            .background(MaterialTheme.colorScheme.background), // Fondo de pantalla
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Título de Bienvenida
         Text(
             text = "Bienvenido",
             style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-            color = Color.Black
+            color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp)) // Espaciado entre el título y el nombre de usuario
 
+        // Nombre de usuario
         Text(
             text = username,
             style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
             color = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(32.dp)) // Espaciado entre el nombre de usuario y los botones
 
         // Botón para "Registrar Nuevo Caso" con estilo moderno
         Button(
@@ -49,7 +52,7 @@ fun LoginSuccessScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
-                .shadow(4.dp, shape = MaterialTheme.shapes.medium), // Sombra para elevar el botón
+                .shadow(8.dp, shape = MaterialTheme.shapes.medium), // Sombra más fuerte para dar más elevación
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
             shape = MaterialTheme.shapes.medium // Bordes redondeados
         ) {
@@ -61,11 +64,12 @@ fun LoginSuccessScreen(
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "Registrar Nuevo Caso",
-                color = MaterialTheme.colorScheme.onPrimaryContainer
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp)) // Espaciado entre los botones
 
         // Botón para "Consultar Estado de Casos" con estilo moderno
         Button(
@@ -73,7 +77,7 @@ fun LoginSuccessScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
-                .shadow(4.dp, shape = MaterialTheme.shapes.medium), // Sombra para elevar el botón
+                .shadow(8.dp, shape = MaterialTheme.shapes.medium), // Sombra más fuerte para dar más elevación
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
             shape = MaterialTheme.shapes.medium // Bordes redondeados
         ) {
@@ -85,7 +89,8 @@ fun LoginSuccessScreen(
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "Consultar Estado de Casos",
-                color = MaterialTheme.colorScheme.onSecondaryContainer
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
             )
         }
     }
