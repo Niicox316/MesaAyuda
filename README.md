@@ -18,7 +18,7 @@ Estructura
           - screens/            # Contiene las pantallas de la app (UI).
           - viewmodel/          # Contiene los ViewModels, como TechnicianCasesViewModel.
       - res/
-        - layout/              # Archivos XML de layout (si los hay).
+        - layout/              # Archivos XML de layout (En este caso NO).
         - values/              # Archivos de recursos como colores y cadenas.
 
 
