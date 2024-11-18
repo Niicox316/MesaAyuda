@@ -21,6 +21,9 @@ class UserViewModel : ViewModel() {
     // Estado para la lista de usuarios
     val users = mutableStateOf<List<User>>(emptyList())
 
+    // Estado para el mensaje de asignación de rol
+    var roleAssignmentMessage = mutableStateOf<String?>(null)
+
     // Cargar usuarios desde Firestore
     fun loadUsers() {
         viewModelScope.launch {
@@ -31,7 +34,7 @@ class UserViewModel : ViewModel() {
                 }
                 users.value = userList
             } catch (e: Exception) {
-                // Manejo de errores de carga, imprime para ver detalles
+                // Manejo de errores de carga
                 println("Error al cargar usuarios: ${e.message}")
             }
         }
@@ -41,13 +44,18 @@ class UserViewModel : ViewModel() {
     fun assignRole(userId: String, role: String) {
         viewModelScope.launch {
             try {
+                // Asignar el rol en Firestore
                 usersCollection.document(userId).update("role", role).await()
+
+                // Actualizar el mensaje de asignación
+                roleAssignmentMessage.value = "Rol '$role' asignado correctamente."
+
                 // Refrescar la lista de usuarios después de asignar el rol
                 loadUsers()
             } catch (e: Exception) {
-                println("Error al asignar rol: ${e.message}")
+                // En caso de error, mostrar mensaje de error
+                roleAssignmentMessage.value = "Error al asignar rol: ${e.message}"
             }
         }
     }
 }
-

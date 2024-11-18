@@ -1,4 +1,5 @@
-package com.example.MesaAyudaFinal.ui.theme.screens
+package com.example.mesadeayuda2.ui.theme.screens
+
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,58 +19,40 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.mesadeayuda2.ViewModel.LoginViewModel
-import kotlinx.coroutines.launch
+import com.example.mesadeayuda2.ViewModel.TechnicianCasesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController) {
-    val loginViewModel: LoginViewModel = viewModel()
-    var username by remember { mutableStateOf("") }
+fun LoginTechnicianScreen(navController: NavController) {
+    val viewModel: TechnicianCasesViewModel = viewModel()
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
-    var usernameError by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf("") }
     var passwordError by remember { mutableStateOf("") }
 
-    val isAuthenticated by remember { derivedStateOf { loginViewModel.isAuthenticated } }
-    val errorMessage by remember { derivedStateOf { loginViewModel.errorMessage } }
-    val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
+    val isAuthenticated by viewModel.isAuthenticated.collectAsState(initial = false)
+    val errorMessage by viewModel.errorMessage.collectAsState(initial = null)
 
-    // Función para validar los campos
     fun validateFields(): Boolean {
         var isValid = true
 
-        // Validación del nombre de usuario
-        if (username.isBlank()) {
-            usernameError = "El nombre de usuario es obligatorio"
+        emailError = if (email.isBlank()) {
             isValid = false
-        } else {
-            usernameError = ""
-        }
-
-        // Validación del correo electrónico
-        if (email.isBlank()) {
-            emailError = "El correo electrónico es obligatorio"
-            isValid = false
+            "El correo electrónico es obligatorio"
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailError = "Correo electrónico inválido"
             isValid = false
-        } else {
-            emailError = ""
-        }
+            "Correo electrónico inválido"
+        } else ""
 
-        // Validación de la contraseña
-        if (password.isBlank()) {
-            passwordError = "La contraseña es obligatoria"
+        passwordError = if (password.isBlank()) {
             isValid = false
-        } else {
-            passwordError = ""
-        }
+            "La contraseña es obligatoria"
+        } else ""
 
         return isValid
     }
@@ -77,11 +60,7 @@ fun LoginScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(Color(0xFF6200EE), Color(0xFFBB86FC))
-                )
-            )
+            .background(Brush.verticalGradient(colors = listOf(Color(0xFF6200EE), Color(0xFFBB86FC))))
             .padding(16.dp)
     ) {
         Column(
@@ -91,36 +70,13 @@ fun LoginScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Título
             Text(
-                text = "Iniciar sesión",
+                text = "Iniciar sesión técnico",
                 style = MaterialTheme.typography.headlineMedium,
                 color = Color.White,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
-            // Campo de nombre de usuario
-            OutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text("Nombre de usuario", color = Color.White) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                isError = usernameError.isNotEmpty(),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.White,
-                    unfocusedBorderColor = Color.LightGray,
-                    cursorColor = Color.White,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.LightGray
-                )
-            )
-            if (usernameError.isNotEmpty()) {
-                Text(text = usernameError, color = Color.Red, style = MaterialTheme.typography.bodySmall)
-            }
-
-            // Campo de correo electrónico
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -130,20 +86,22 @@ fun LoginScreen(navController: NavController) {
                     .padding(bottom = 16.dp),
                 isError = emailError.isNotEmpty(),
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                keyboardActions = KeyboardActions(onNext = { /* Acción para el siguiente campo */ }),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.White,
                     unfocusedBorderColor = Color.LightGray,
                     cursorColor = Color.White,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.LightGray
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.LightGray
                 )
             )
             if (emailError.isNotEmpty()) {
-                Text(text = emailError, color = Color.Red, style = MaterialTheme.typography.bodySmall)
+                Text(
+                    text = emailError,
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
 
-            // Campo de contraseña
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -166,54 +124,45 @@ fun LoginScreen(navController: NavController) {
                     focusedBorderColor = Color.White,
                     unfocusedBorderColor = Color.LightGray,
                     cursorColor = Color.White,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.LightGray
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.LightGray
                 )
             )
             if (passwordError.isNotEmpty()) {
-                Text(text = passwordError, color = Color.Red, style = MaterialTheme.typography.bodySmall)
+                Text(
+                    text = passwordError,
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
 
-            // Botón de inicio de sesión
             Button(
                 onClick = {
                     if (validateFields()) {
-                        loginViewModel.authenticateUser(email, password)
+                        viewModel.authenticateTechnician(email, password)
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
                     .padding(top = 16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF5722)) // Color atractivo
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF5722))
             ) {
-                Text("Ingresar", color = Color.White, style = MaterialTheme.typography.bodyLarge)
+                Text("Iniciar sesión", color = Color.White, style = MaterialTheme.typography.bodyLarge)
             }
 
-            // Mensaje de error
-            if (errorMessage != null) {
-                Text(
-                    text = "Error: $errorMessage",
-                    color = Color.Red,
-                    style = MaterialTheme.typography.bodySmall
-                )
+            errorMessage?.let { msg ->
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = msg, color = MaterialTheme.colorScheme.error, fontSize = 14.sp)
             }
 
-            // Navegación y mensaje de éxito
             if (isAuthenticated) {
-                LaunchedEffect(Unit) {
-                    coroutineScope.launch {
-                        snackbarHostState.showSnackbar("Ingreso exitoso")
-                    }
-
-                    navController.navigate("login_success/${username}") {
-                        popUpTo("login") { inclusive = true }
+                LaunchedEffect(isAuthenticated) {
+                    navController.navigate("technician_cases") {
+                        popUpTo("login_technician") { inclusive = true }
                     }
                 }
             }
-
-            // Host para mostrar el Snackbar
-            SnackbarHost(hostState = snackbarHostState)
         }
     }
 }

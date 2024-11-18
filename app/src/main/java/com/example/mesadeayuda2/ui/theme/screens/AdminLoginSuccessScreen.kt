@@ -1,4 +1,4 @@
-package com.example.mesadeayuda2.ui.theme.screens
+package com.example.MesaAyudaFinal.ui.theme.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +21,7 @@ import com.example.mesadeayuda2.ViewModel.UserViewModel
 fun AdminLoginSuccessScreen() {
     val userViewModel: UserViewModel = viewModel()
     val users by userViewModel.users
+    val roleAssignmentMessage by userViewModel.roleAssignmentMessage // Observa el estado del mensaje
 
     // Cargar los usuarios al iniciar la pantalla
     LaunchedEffect(Unit) {
@@ -31,7 +32,7 @@ fun AdminLoginSuccessScreen() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .padding(top = 32.dp), // Ajusta el valor para agregar más espacio superior
+            .padding(top = 32.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -40,6 +41,16 @@ fun AdminLoginSuccessScreen() {
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
+
+        // Mostrar el mensaje de asignación de rol si está presente
+        roleAssignmentMessage?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (it.startsWith("Error")) Color.Red else MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+        }
 
         // Mostrar la lista de usuarios
         if (users.isNotEmpty()) {
@@ -59,7 +70,6 @@ fun AdminLoginSuccessScreen() {
         }
     }
 }
-
 
 @Composable
 fun UserItem(name: String, email: String, userId: String, userViewModel: UserViewModel) {

@@ -13,15 +13,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.MesaAyudaFinal.ui.theme.screens.AdminLoginSuccessScreen
+import com.example.MesaAyudaFinal.ui.theme.screens.LoginScreen
+import com.example.MesaAyudaFinal.ui.theme.screens.LoginSuccessScreen
+import com.example.mesadeayuda2.screens.TechnicianCasesScreen
 import com.example.mesadeayuda2.ui.theme.MesaDeAyuda2Theme
 import com.example.mesadeayuda2.ui.theme.screens.AdminLoginScreen
-import com.example.mesadeayuda2.ui.theme.screens.AdminLoginSuccessScreen
 import com.example.mesadeayuda2.ui.theme.screens.CheckStatusScreen
-import com.example.mesadeayuda2.ui.theme.screens.LoginScreen
-import com.example.mesadeayuda2.ui.theme.screens.LoginSuccessScreen
+import com.example.mesadeayuda2.ui.theme.screens.LoginTechnicianScreen
 import com.example.mesadeayuda2.ui.theme.screens.NewCaseScreen
 import com.example.mesadeayuda2.ui.theme.screens.RegisterScreen
-import com.example.mesadeayuda2.ui.theme.screens.TechnicianCasesScreen
 import com.example.mesadeayuda2.ui.theme.screens.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MesaDeAyuda2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Navigation()  // Agregamos la navegación
+                    Navigation() // Agregamos la navegación
                 }
             }
         }
@@ -41,13 +42,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = "welcome") {
-        composable("welcome") { WelcomeScreen(navController) }  // Pantalla de bienvenida
+
+    NavHost(navController = navController, startDestination = "welcome") {
+        // Pantallas de inicio
+        composable("welcome") { WelcomeScreen(navController) }
         composable("register") { RegisterScreen(navController) }
         composable("login") { LoginScreen(navController) }
         composable("admin_login") { AdminLoginScreen(navController) }
         composable("admin_login_success") { AdminLoginSuccessScreen() }
 
+        // Pantalla de Login con verificación de Email
         composable(
             "login_success/{email}",
             arguments = listOf(navArgument("email") { type = NavType.StringType })
@@ -60,16 +64,22 @@ fun Navigation() {
             )
         }
 
+        // Pantalla de Nuevo Caso
         composable("new_case") { NewCaseScreen() }
 
-        composable("check_status/{nombreUsuario}",
+        // Pantalla de Verificación de Estado
+        composable(
+            "check_status/{nombreUsuario}",
             arguments = listOf(navArgument("nombreUsuario") { type = NavType.StringType })
         ) { backStackEntry ->
             val nombreUsuario = backStackEntry.arguments?.getString("nombreUsuario") ?: ""
             CheckStatusScreen(navController = navController, nombreUsuario = nombreUsuario)
         }
 
-        // Nueva pantalla para los casos del técnico de soporte
-        composable("technician_cases") { TechnicianCasesScreen() }
+        // Pantalla de inicio de sesión para Técnicos de Soporte
+        composable("login_technician") { LoginTechnicianScreen(navController) }
+
+        // Pantalla de casos técnicos
+        composable("technician_cases") { TechnicianCasesScreen(navController) }
     }
 }
